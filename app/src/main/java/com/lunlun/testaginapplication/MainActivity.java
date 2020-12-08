@@ -158,8 +158,13 @@
 
 package com.lunlun.testaginapplication;
 
+import android.Manifest;
 import android.content.Context;
+import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.telephony.TelephonyManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
@@ -172,6 +177,9 @@ import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.snackbar.Snackbar;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.ActivityCompat;
 import androidx.navigation.NavController;
 import androidx.navigation.Navigation;
 import androidx.navigation.ui.AppBarConfiguration;
@@ -187,12 +195,41 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
+//    String IMEINumber;
+//    TextView imei;
+
     private AppBarConfiguration mAppBarConfiguration;
+
+//    private static final int REQUEST_CODE_LOGIN=101;//全大寫是特別的貓逆，不會變，用來表示特別的東西
+    boolean logon =false; //是不是登入
+//    private LoginActivity loginactivity;
+//    private static final String TAG = MainActivity.class.getSimpleName();
+//    private static final int REQUEST_CODE_NICKNAME=21;
+//
+    private static final int REQUEST_CODE = 101;
+//    private TextView imei;
+//    private TextView age;
+//    private TextView gender;
+
+//    String IMEINumber;
+//    TextView imei;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+//        getImei();
+
+//        imei = findViewById(R.id.imeiTextView);
+
+        if(!logon){
+            //如果不是登入狀態就呼叫login intent
+            Intent login = new Intent(this, LoginActivity.class);
+//            startActivities(login);
+//            startActivityForResult(login, REQUEST_CODE_LOGIN);
+            startActivityForResult(login, REQUEST_CODE);
+        }
+
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -221,8 +258,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager( new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
 
         List<ApplicationItem> applicationItemList = new ArrayList<>();
-        applicationItemList.add(new ApplicationItem (1,"打卡出勤系統",R.drawable.icon_immigration));
-        applicationItemList.add(new ApplicationItem (2,"員工排班系統",R.drawable.icon_calendar));
+        applicationItemList.add(new ApplicationItem (1,getString(R.string.app_time_attendance_system),R.drawable.icon_immigration));
+        applicationItemList.add(new ApplicationItem (2,getString(R.string.app_staff_scheduling_system),R.drawable.icon_calendar));
         applicationItemList.add(new ApplicationItem (3,"會議室簽到系統",R.drawable.icon_conversation));
         applicationItemList.add(new ApplicationItem (4,"教學評量系統",R.drawable.icon_checklist));
         applicationItemList.add(new ApplicationItem (5,"採檢及生理量測系統",R.drawable.icon_blood_sample));
@@ -238,6 +275,12 @@ public class MainActivity extends AppCompatActivity {
         taskList.add(new Task (3,"今日會議",R.drawable.icon_conversation));
 
         noterecyclerView.setAdapter(new TaskAdapter(this,taskList));
+
+//        Log.d(TAG,"setValue");
+//        String IMEINumber = getSharedPreferences("login", MODE_PRIVATE)
+//                .getString("loginEdUsername", "");
+//        imei.setText(IMEINumber+"");
+//        Log.d(TAG,IMEINumber+"");
 
     }
 
@@ -285,12 +328,13 @@ public class MainActivity extends AppCompatActivity {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ImageView imageView = new ImageView(context);
-                    imageView.setImageResource(applicationItem.position);
-                    Toast toast = new Toast(context);
-                    toast.setView(imageView);
-                    toast.setDuration(Toast.LENGTH_SHORT);
-                    toast.show();
+//                    ImageView imageView = new ImageView(context);
+//                    imageView.setImageResource(applicationItem.imageViewpost);
+                    new AlertDialog.Builder(context)
+                            .setIcon(applicationItem.imageViewpost)
+                            .setMessage("早安你好")
+                            .setTitle(applicationItem.appName)
+                            .show();
                 }
             });
         }
@@ -352,12 +396,13 @@ public class MainActivity extends AppCompatActivity {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    ImageView imageView = new ImageView(taskcontext);
-//                    imageView.setImageResource(task.taskPosition);
-//                    Toast toast = new Toast(taskcontext);
-//                    toast.setView(imageView);
-//                    toast.setDuration(Toast.LENGTH_SHORT);
-//                    toast.show();
+                    new AlertDialog.Builder(taskcontext)
+                            .setIcon(task.taskImageView)
+                            .setMessage("早安你好")
+                            .setTitle(task.taskName)
+                            .setPositiveButton("已讀",null)
+                            .setNeutralButton("cancel/back",null)
+                            .show();
                 }
             });
         }
@@ -388,4 +433,33 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
+
+//    @Override
+//    //防止按返回
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        //requestCode:出門前貼標籤
+//        //resultCode:回來帶的結果
+//        if(requestCode == REQUEST_CODE){
+//            //判斷是不是正常回家，如果有好好的來回
+//            if(resultCode != RESULT_OK){
+//                Toast.makeText(this,"再見",Toast.LENGTH_LONG).show();
+//                finish();
+//            }else {
+//                logon=true;
+//            }
+//        }
+//    }
+
+//    public void getImei() {
+//        imei = findViewById(R.id.ed_imei);
+//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+//        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+//            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
+//            return;
+//        }
+//        IMEINumber = telephonyManager.getDeviceId();
+//        imei.setText(IMEINumber);
+//    }
+
+
 }

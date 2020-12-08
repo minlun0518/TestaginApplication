@@ -64,7 +64,7 @@
         android:layout_height="32dp"
         android:layout_marginStart="24dp"
         android:lineSpacingExtra="24sp"
-        android:text="推播通知 "
+        android:text="訊息"
         android:textSize="24sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"

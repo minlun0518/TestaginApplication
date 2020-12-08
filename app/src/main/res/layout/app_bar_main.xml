@@ -28,8 +28,11 @@
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/fab_margin"
         android:background="@drawable/snoopy"
-        app:backgroundTint="@color/cardview_shadow_end_color"
+
         app:fabSize="auto"
-        app:rippleColor="@color/material_on_surface_stroke" />
+         />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
+
+<!--    app:backgroundTint="@color/cardview_shadow_end_color"-->
+<!--    app:rippleColor="@color/material_on_surface_stroke"-->
