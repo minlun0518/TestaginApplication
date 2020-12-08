@@ -7,11 +7,15 @@ import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.telephony.TelephonyManager;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
@@ -20,8 +24,10 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -34,6 +40,10 @@ public class LoginActivity extends AppCompatActivity {
     private String eemail;
     private String pass;
     private CheckBox cb;
+
+    private KeyguardManager mKeyguardManager;
+    private FingerprintManager mFingerprintManager;
+    private CancellationSignal cancellationSignal;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,6 +69,66 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
+        checkrequirement();
+        startFingerprintListening();
+
+    }
+
+    private void startFingerprintListening() {
+        cancellationSignal = new CancellationSignal();
+        if (checkSelfPermission(Manifest.permission.USE_FINGERPRINT) == PackageManager.PERMISSION_GRANTED) //In SDK 23, we need to check the permission before we call FingerprintManager API functionality.
+        {
+            mFingerprintManager.authenticate(
+                    null, //crypto objects 的 wrapper class，可以透過它讓 authenticate 過程更為安全，但也可以不使用。
+                    cancellationSignal, //用來取消 authenticate 的 object
+                    0, //optional flags; should be 0
+                    mAuthenticationCallback, //callback 用來接收 authenticate 成功與否，有三個 callback method
+                    null); //optional 的參數，如果有使用，FingerprintManager 會透過它來傳遞訊息
+        }
+    }
+
+    FingerprintManager.AuthenticationCallback mAuthenticationCallback = new FingerprintManager.AuthenticationCallback(){
+        @Override
+        public void onAuthenticationError(int errorCode, CharSequence errString) {
+            Log.e("", "error " + errorCode + " " + errString);//辨識錯誤
+        }
+        @Override
+        public void onAuthenticationFailed() {
+            Log.e("", "onAuthenticationFailed");// 辨識失敗
+        }
+        @Override
+        public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
+            Log.i("", "onAuthenticationSucceeded");//辨識成功
+        }
+    };
+
+    @Override
+    public void onPause() {
+        super.onPause();
+        cancellationSignal.cancel();
+        cancellationSignal = null;
+    }
+
+    private void checkrequirement() {
+        mKeyguardManager = (KeyguardManager)getSystemService(Activity.KEYGUARD_SERVICE);//是否有設定 screen lock
+                mFingerprintManager = (FingerprintManager) getSystemService(Activity.FINGERPRINT_SERVICE);//FingerprintManager.class
+
+        if (!mKeyguardManager.isKeyguardSecure()){//是否有設定 fingerprint screen lock
+            return;
+        }
+
+        if (checkSelfPermission(Manifest.permission.USE_FINGERPRINT) == PackageManager.PERMISSION_GRANTED) //In SDK 23, we need to check the permission before we call FingerprintManager API functionality.
+        {
+            if (!mFingerprintManager.isHardwareDetected())//硬體裝置是否支援 fingerprint reader
+            {
+                return;
+            }
+
+            if (!mFingerprintManager.hasEnrolledFingerprints())//是否有設定至少一枚指紋
+            {
+                return;
+            }
+        }
     }
 
     public void login(View view) {
@@ -81,6 +151,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void authenticate (
+            FingerprintManager.CryptoObject crypto,//為 Android 6.0中 crypto objects 的 wrapper class，可以透過它讓 authenticate 過程更為安全，但也可以不使用；
+            CancellationSignal cancel,//即用來取消 authenticate 的物件；
+            int flags,//為一個旗標，只能設為 0
+            FingerprintManager.AuthenticationCallback callback,//用來接受 authenticate 成功與否，一共有三個 callback method；
+            Handler handler) //為 optional 的參數，如果有使用，則 FingerprintManager 可以透過它來傳遞訊息
+
     public void signup (View view) {
         Intent signupit = new Intent(LoginActivity.this, SignupActivity.class);
         startActivity(signupit);
@@ -96,6 +173,13 @@ public class LoginActivity extends AppCompatActivity {
         imei.setText(IMEINumber);
     }
 
+    public void lock(){
+        findViewById(R.id.imageView2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            }
+        });
+    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {

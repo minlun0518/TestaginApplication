@@ -159,10 +159,13 @@
 package com.lunlun.testaginapplication;
 
 import android.Manifest;
+import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
+import android.os.CancellationSignal;
 import android.telephony.TelephonyManager;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -195,41 +198,26 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-//    String IMEINumber;
-//    TextView imei;
-
     private AppBarConfiguration mAppBarConfiguration;
 
 //    private static final int REQUEST_CODE_LOGIN=101;//全大寫是特別的貓逆，不會變，用來表示特別的東西
     boolean logon =false; //是不是登入
-//    private LoginActivity loginactivity;
 //    private static final String TAG = MainActivity.class.getSimpleName();
 //    private static final int REQUEST_CODE_NICKNAME=21;
 //
     private static final int REQUEST_CODE = 101;
-//    private TextView imei;
-//    private TextView age;
-//    private TextView gender;
-
-//    String IMEINumber;
-//    TextView imei;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-//        getImei();
-
-//        imei = findViewById(R.id.imeiTextView);
 
         if(!logon){
-            //如果不是登入狀態就呼叫login intent
             Intent login = new Intent(this, LoginActivity.class);
 //            startActivities(login);
 //            startActivityForResult(login, REQUEST_CODE_LOGIN);
             startActivityForResult(login, REQUEST_CODE);
         }
-
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -254,6 +242,10 @@ public class MainActivity extends AppCompatActivity {
         NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
         NavigationUI.setupWithNavController(navigationView, navController);
 
+        findlist();
+    }
+
+    private void findlist() {
         RecyclerView recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager( new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
 
@@ -275,12 +267,6 @@ public class MainActivity extends AppCompatActivity {
         taskList.add(new Task (3,"今日會議",R.drawable.icon_conversation));
 
         noterecyclerView.setAdapter(new TaskAdapter(this,taskList));
-
-//        Log.d(TAG,"setValue");
-//        String IMEINumber = getSharedPreferences("login", MODE_PRIVATE)
-//                .getString("loginEdUsername", "");
-//        imei.setText(IMEINumber+"");
-//        Log.d(TAG,IMEINumber+"");
 
     }
 
@@ -420,7 +406,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -433,33 +418,5 @@ public class MainActivity extends AppCompatActivity {
         NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
-
-//    @Override
-//    //防止按返回
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        //requestCode:出門前貼標籤
-//        //resultCode:回來帶的結果
-//        if(requestCode == REQUEST_CODE){
-//            //判斷是不是正常回家，如果有好好的來回
-//            if(resultCode != RESULT_OK){
-//                Toast.makeText(this,"再見",Toast.LENGTH_LONG).show();
-//                finish();
-//            }else {
-//                logon=true;
-//            }
-//        }
-//    }
-
-//    public void getImei() {
-//        imei = findViewById(R.id.ed_imei);
-//        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-//        if (ActivityCompat.checkSelfPermission(MainActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-//            ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
-//            return;
-//        }
-//        IMEINumber = telephonyManager.getDeviceId();
-//        imei.setText(IMEINumber);
-//    }
-
 
 }
