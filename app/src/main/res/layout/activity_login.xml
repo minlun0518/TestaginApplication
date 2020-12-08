@@ -23,8 +23,8 @@
         android:layout_marginEnd="32dp"
         android:background="#f0f4f8"
         android:ems="10"
+        android:hint="密碼"
         android:inputType="textPassword"
-        android:text="123123"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toStartOf="parent"
@@ -40,8 +40,8 @@
         android:layout_marginEnd="32dp"
         android:background="#f0f4f8"
         android:ems="10"
+        android:hint="請輸入員工編號"
         android:inputType="textEmailAddress"
-        android:text="wubetty2012@gmail.com"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -63,7 +63,7 @@
         android:layout_marginStart="32dp"
         android:layout_marginTop="8dp"
         android:onClick="login"
-        android:text="Login"
+        android:text="@string/login"
         android:textColor="#fff"
         app:backgroundTint="#7bed8d"
         app:layout_constraintStart_toStartOf="parent"
@@ -76,7 +76,7 @@
         android:layout_height="45dp"
         android:layout_marginStart="32dp"
         android:layout_marginTop="16dp"
-        android:text="Forget passward"
+        android:text="@string/forget_passward"
         android:textColor="@color/teal_700"
         android:textColorHint="#FFFFFF"
         app:layout_constraintStart_toStartOf="parent"
@@ -107,7 +107,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <ImageButton
-        android:id="@+id/fingerimageButton"
+        android:id="@+id/touchidimageButton"
         android:layout_width="64dp"
         android:layout_height="64dp"
         android:layout_marginStart="32dp"
@@ -119,7 +119,7 @@
         app:srcCompat="@drawable/icon_touch_id" />
 
     <ImageButton
-        android:id="@+id/imageButton3"
+        android:id="@+id/faceidimageButton"
         style="@android:style/Widget.ImageButton"
         android:layout_width="64dp"
         android:layout_height="64dp"
@@ -127,14 +127,14 @@
         android:background="?attr/selectableItemBackground"
         android:scaleType="fitCenter"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/fingerimageButton"
+        app:layout_constraintTop_toTopOf="@+id/touchidimageButton"
         app:srcCompat="@drawable/icon_face_id" />
 
     <ImageButton
         android:id="@+id/soonImageButton"
-        style="@android:style/Widget.Holo.ImageButton"
-        android:layout_width="134dp"
-        android:layout_height="157dp"
+        style="@android:style/Widget.DeviceDefault.ImageButton"
+        android:layout_width="84dp"
+        android:layout_height="78dp"
         android:layout_marginStart="32dp"
         android:layout_marginBottom="32dp"
         android:scaleType="fitCenter"

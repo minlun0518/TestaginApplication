@@ -1,161 +1,3 @@
-//package com.lunlun.testaginapplication;
-//
-//import android.content.Context;
-//import android.media.Image;
-//import android.os.Bundle;
-//import android.view.LayoutInflater;
-//import android.view.View;
-//import android.view.Menu;
-//import android.view.ViewGroup;
-//import android.widget.ImageView;
-//import android.widget.TextView;
-//
-//import com.google.android.material.floatingactionbutton.FloatingActionButton;
-//import com.google.android.material.snackbar.Snackbar;
-//import com.google.android.material.navigation.NavigationView;
-//
-//import androidx.navigation.NavController;
-//import androidx.navigation.Navigation;
-//import androidx.navigation.ui.AppBarConfiguration;
-//import androidx.navigation.ui.NavigationUI;
-//import androidx.drawerlayout.widget.DrawerLayout;
-//import androidx.appcompat.app.AppCompatActivity;
-//import androidx.appcompat.widget.Toolbar;
-//import androidx.recyclerview.widget.RecyclerView;
-//import androidx.recyclerview.widget.StaggeredGridLayoutManager;
-//
-//import java.util.ArrayList;
-//import java.util.List;
-//
-//public class MainActivity extends AppCompatActivity {
-//
-//    private AppBarConfiguration mAppBarConfiguration;
-//
-//    @Override
-//    protected void onCreate(Bundle savedInstanceState) {
-//        super.onCreate(savedInstanceState);
-//        setContentView(R.layout.activity_main);
-//
-//        Toolbar toolbar = findViewById(R.id.toolbar);
-//        setSupportActionBar(toolbar);
-//        FloatingActionButton fab = findViewById(R.id.fab);
-//        fab.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-//                        .setAction("Action", null).show();
-//            }
-//        });
-//
-//        DrawerLayout drawer = findViewById(R.id.drawer_layout);
-//        NavigationView navigationView = findViewById(R.id.nav_view);
-//        // Passing each menu ID as a set of Ids because each
-//        // menu should be considered as top level destinations.
-//        mAppBarConfiguration = new AppBarConfiguration.Builder(
-//                R.id.nav_home, R.id.nav_gallery, R.id.nav_slideshow)
-//                .setDrawerLayout(drawer)
-//                .build();
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        NavigationUI.setupActionBarWithNavController(this, navController, mAppBarConfiguration);
-//        NavigationUI.setupWithNavController(navigationView, navController);
-//
-//        RecyclerView recyclerView = findViewById(R.id.recyclerView);
-//        recyclerView.setLayoutManager( new StaggeredGridLayoutManager(3,StaggeredGridLayoutManager.VERTICAL));
-//
-//        List<ApplicationItem> applicationItemList = getApplicationItemList();
-//
-//
-//        recyclerView.setAdapter(new ApplicationItemAdapter(this,applicationItemList));
-//
-//    }
-//
-//    private class ApplicationItemAdapter extends RecyclerView.Adapter < ApplicationItemAdapter.MyViewHolder > {
-//        private Context context;
-//        private List<ApplicationItem> applicationItemList;
-//
-//        ApplicationItemAdapter(Context context,List<ApplicationItem> applicationItemList){
-//            this.context=context;
-//            this.applicationItemList = applicationItemList;
-//        }
-//
-//        class MyViewHolder extends RecyclerView.ViewHolder{
-//            ImageView imageview;
-//            TextView appname;
-//
-//            public MyViewHolder(View itemView){
-//                super(itemView);
-//                imageview= itemView.findViewById(R.id.imageView2);
-//                appname=itemView.findViewById(R.id.textView5);
-//            }
-//        }
-//
-//        @Override
-//        public int getItemCount() {
-//            return applicationItemList.size();
-//        }
-//
-//
-//        @Override
-//        public MyViewHolder onCreateViewHolder(ViewGroup viewGroup,int viewType){
-//            LayoutInflater layoutInflater =LayoutInflater.from(context);
-//            View itemView=layoutInflater.inflate(R.layout.itemview,viewGroup,false);
-//            return new MyViewHolder(itemView);
-//        }
-//
-//        @Override
-//        public void onBindViewHolder(MyViewHolder viewHolder,int position){
-//            final ApplicationItem applicationItem = applicationItem.get(position);
-////            viewHolder.appname.setText(applicationItem.getName());
-//            viewHolder.appname.setText(applicationItem.appName);
-//            viewHolder.imageview.setImageDrawable(applicationItem.getImage());
-//            viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) {
-//
-//                }
-//            });
-//        }
-//    }
-//    @Override
-//    public Object getImage(int position) {
-//        return getApplicationItemList().;
-//    }
-//
-//    @Override
-//    public boolean onCreateOptionsMenu(Menu menu) {
-//        // Inflate the menu; this adds items to the action bar if it is present.
-//        getMenuInflater().inflate(R.menu.main, menu);
-//        return true;
-//    }
-//
-//    @Override
-//    public boolean onSupportNavigateUp() {
-//        NavController navController = Navigation.findNavController(this, R.id.nav_host_fragment);
-//        return NavigationUI.navigateUp(navController, mAppBarConfiguration)
-//                || super.onSupportNavigateUp();
-//    }
-//
-//    public List<ApplicationItem> getApplicationItemList(){
-//        List<ApplicationItem> applicationItemList = new ArrayList<>();
-//        applicationItemList.add(new ApplicationItem (1,"打卡出勤系統",R.drawable.icon_immigration));
-//        applicationItemList.add(new ApplicationItem (2,"員工排班系統",R.drawable.icon_calendar));
-//        return applicationItemList;
-//    }
-//
-//    public class ApplicationItem{
-//        public int position;
-//        public String appName;
-//        public Object imageViewpost;
-//
-//        public ApplicationItem(int position, String appName, Object imageViewpost){
-//            this.position=position;
-//            this.appName=appName;
-//            this.imageViewpost=imageViewpost;
-//        }
-//
-//    }
-//}
-
 package com.lunlun.testaginapplication;
 
 import android.Manifest;
@@ -197,14 +39,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
-
     private AppBarConfiguration mAppBarConfiguration;
-
-//    private static final int REQUEST_CODE_LOGIN=101;//全大寫是特別的貓逆，不會變，用來表示特別的東西
-    boolean logon =false; //是不是登入
-//    private static final String TAG = MainActivity.class.getSimpleName();
-//    private static final int REQUEST_CODE_NICKNAME=21;
-//
+    boolean logon =false;
+    private static final String TAG = MainActivity.class.getSimpleName();
     private static final int REQUEST_CODE = 101;
 
     @Override
@@ -214,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
 
         if(!logon){
             Intent login = new Intent(this, LoginActivity.class);
-//            startActivities(login);
-//            startActivityForResult(login, REQUEST_CODE_LOGIN);
             startActivityForResult(login, REQUEST_CODE);
         }
 
@@ -267,7 +102,6 @@ public class MainActivity extends AppCompatActivity {
         taskList.add(new Task (3,"今日會議",R.drawable.icon_conversation));
 
         noterecyclerView.setAdapter(new TaskAdapter(this,taskList));
-
     }
 
     private class ApplicationItemAdapter extends RecyclerView.Adapter < ApplicationItemAdapter.ViewHolder > {
@@ -314,8 +148,6 @@ public class MainActivity extends AppCompatActivity {
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-//                    ImageView imageView = new ImageView(context);
-//                    imageView.setImageResource(applicationItem.imageViewpost);
                     new AlertDialog.Builder(context)
                             .setIcon(applicationItem.imageViewpost)
                             .setMessage("早安你好")

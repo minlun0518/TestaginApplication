@@ -16,4 +16,6 @@
     <string name="app_time_attendance_system">打卡出勤系統</string>
     <string name="app_staff_scheduling_system">員工排班系統</string>
     <string name="sing_up">註冊</string>
+    <string name="forget_passward">忘記密碼</string>
+    <string name="login">登入</string>
 </resources>

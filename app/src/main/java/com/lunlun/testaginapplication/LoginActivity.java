@@ -6,12 +6,10 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 
 import android.Manifest;
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
 import android.os.Bundle;
@@ -24,14 +22,12 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = LoginActivity.class.getSimpleName();
     String IMEINumber;
     TextView imei;
     private static final int REQUEST_CODE = 101;
@@ -50,11 +46,36 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        password = findViewById(R.id.ed_password);
-        cb = findViewById(R.id.showpswcheckBox);
-        imei = findViewById(R.id.ed_imei);
         getImei();
+        findView();
+    }
 
+    private void findView() {
+        findViewById(R.id.touchidimageButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LoginActivity.this,"指紋辨識",Toast.LENGTH_LONG).show();
+                checkrequirement();
+                startFingerprintListening();
+            }
+        });
+
+        findViewById(R.id.faceidimageButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(LoginActivity.this,"目前不支援臉部辨識",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        findViewById(R.id.soonImageButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                email.setText("wubetty2012@gmail.com");
+                password.setText("123456");
+            }
+        });
+
+        cb = findViewById(R.id.showpswcheckBox);
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
@@ -67,14 +88,6 @@ public class LoginActivity extends AppCompatActivity {
                     password.setTransformationMethod(PasswordTransformationMethod.getInstance());
 
                 }
-            }
-        });
-
-        findViewById(R.id.fingerimageButton).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                checkrequirement();
-                startFingerprintListening();
             }
         });
     }
@@ -95,23 +108,31 @@ public class LoginActivity extends AppCompatActivity {
     FingerprintManager.AuthenticationCallback mAuthenticationCallback = new FingerprintManager.AuthenticationCallback(){
         @Override
         public void onAuthenticationError(int errorCode, CharSequence errString) {
-            Log.e("", "error 辨識錯誤" + errorCode + " " + errString);//辨識錯誤
-//            Toast.makeText(this,"辨識錯誤", Toast.LENGTH_LONG).show();
+            Log.e("", "error 辨識錯誤" + errorCode + " " + errString);
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setTitle("指紋辨識結果")
+                    .setMessage("辨識錯誤")
+                    .setPositiveButton("OK", null)
+                    .show();
         }
         @Override
         public void onAuthenticationFailed() {
-            Log.e("", "辨識失敗 onAuthenticationFailed");//
-//            Toast.makeText(this,"辨識失敗", Toast.LENGTH_LONG).show();
+            Log.e("", "辨識失敗 onAuthenticationFailed");
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setTitle("指紋辨識結果")
+                    .setMessage("辨識失敗")
+                    .setPositiveButton("OK", null)
+                    .show();
         }
         @Override
         public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
-            Log.i("", "辨識成功 onAuthenticationSucceeded");//辨識成功
-//            Toast.makeText(this,"辨識成功", Toast.LENGTH_LONG).show();
+            Log.i("", "辨識成功 onAuthenticationSucceeded");
             new AlertDialog.Builder(LoginActivity.this)
                     .setTitle("指紋辨識結果")
                     .setMessage("辨識成功")
-                    .setPositiveButton("OK", null)
+                    .setPositiveButton("OK",null )
                     .show();
+            verifiedsuccessfully();
         }
     };
 
@@ -147,17 +168,36 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void signup (View view) {
+        Intent signupit = new Intent(LoginActivity.this, SignupActivity.class);
+        startActivity(signupit);
+    }
+
+    public void getImei() {
+        imei = findViewById(R.id.ed_imei);
+
+        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
+        if (ActivityCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
+            return;
+        }
+        IMEINumber = telephonyManager.getDeviceId();
+        imei.setText(IMEINumber);
+        new AlertDialog.Builder(this)
+                .setTitle("手機識別碼讀取結果")
+                .setMessage("您的裝置編號為:"+IMEINumber)
+                .setPositiveButton("OK", null)
+                .show();
+    }
+
     public void login(View view) {
         email = findViewById(R.id.ed_email);
-//        EditText password = findViewById(R.id.ed_password);
         eemail = email.getText().toString();
+        password = findViewById(R.id.ed_password);
         pass = password.getText().toString();
 
         if (eemail.equals("wubetty2012@gmail.com") && pass.equals("123123")) {
-            setResult(RESULT_OK);
-            finish();
-//            Intent main = new Intent(LoginActivity.this, MainActivity.class);
-//            startActivity(main);
+            verifiedsuccessfully();
         } else {
             new AlertDialog.Builder(this)
                     .setTitle("登入失敗")
@@ -167,6 +207,13 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    public void verifiedsuccessfully(){
+        setResult(RESULT_OK);
+        finish();
+//            Intent main = new Intent(LoginActivity.this, MainActivity.class);
+//            startActivity(main);
+    }
+
 //    public void authenticate (
 //            FingerprintManager.CryptoObject crypto,//為 Android 6.0中 crypto objects 的 wrapper class，可以透過它讓 authenticate 過程更為安全，但也可以不使用；
 //            CancellationSignal cancel,//即用來取消 authenticate 的物件；
@@ -174,28 +221,7 @@ public class LoginActivity extends AppCompatActivity {
 //            FingerprintManager.AuthenticationCallback callback,//用來接受 authenticate 成功與否，一共有三個 callback method；
 //            Handler handler)//為 optional 的參數，如果有使用，則 FingerprintManager 可以透過它來傳遞訊息
 
-    public void signup (View view) {
-        Intent signupit = new Intent(LoginActivity.this, SignupActivity.class);
-        startActivity(signupit);
-    }
 
-    public void getImei() {
-        TelephonyManager telephonyManager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-        if (ActivityCompat.checkSelfPermission(LoginActivity.this, Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(LoginActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, REQUEST_CODE);
-            return;
-        }
-        IMEINumber = telephonyManager.getDeviceId();
-        imei.setText(IMEINumber);
-    }
-
-    public void lock(){
-        findViewById(R.id.imageView2).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-            }
-        });
-    }
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
