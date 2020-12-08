@@ -69,9 +69,14 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         });
-        checkrequirement();
-        startFingerprintListening();
 
+        findViewById(R.id.fingerimageButton).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                checkrequirement();
+                startFingerprintListening();
+            }
+        });
     }
 
     private void startFingerprintListening() {
@@ -90,15 +95,23 @@ public class LoginActivity extends AppCompatActivity {
     FingerprintManager.AuthenticationCallback mAuthenticationCallback = new FingerprintManager.AuthenticationCallback(){
         @Override
         public void onAuthenticationError(int errorCode, CharSequence errString) {
-            Log.e("", "error " + errorCode + " " + errString);//辨識錯誤
+            Log.e("", "error 辨識錯誤" + errorCode + " " + errString);//辨識錯誤
+//            Toast.makeText(this,"辨識錯誤", Toast.LENGTH_LONG).show();
         }
         @Override
         public void onAuthenticationFailed() {
-            Log.e("", "onAuthenticationFailed");// 辨識失敗
+            Log.e("", "辨識失敗 onAuthenticationFailed");//
+//            Toast.makeText(this,"辨識失敗", Toast.LENGTH_LONG).show();
         }
         @Override
         public void onAuthenticationSucceeded(FingerprintManager.AuthenticationResult result) {
-            Log.i("", "onAuthenticationSucceeded");//辨識成功
+            Log.i("", "辨識成功 onAuthenticationSucceeded");//辨識成功
+//            Toast.makeText(this,"辨識成功", Toast.LENGTH_LONG).show();
+            new AlertDialog.Builder(LoginActivity.this)
+                    .setTitle("指紋辨識結果")
+                    .setMessage("辨識成功")
+                    .setPositiveButton("OK", null)
+                    .show();
         }
     };
 
@@ -114,6 +127,7 @@ public class LoginActivity extends AppCompatActivity {
                 mFingerprintManager = (FingerprintManager) getSystemService(Activity.FINGERPRINT_SERVICE);//FingerprintManager.class
 
         if (!mKeyguardManager.isKeyguardSecure()){//是否有設定 fingerprint screen lock
+            Toast.makeText(this, "是否有設定 fingerprint screen lock", Toast.LENGTH_LONG).show();
             return;
         }
 
@@ -121,11 +135,13 @@ public class LoginActivity extends AppCompatActivity {
         {
             if (!mFingerprintManager.isHardwareDetected())//硬體裝置是否支援 fingerprint reader
             {
+                Toast.makeText(this, "硬體裝置是否支援 fingerprint reader", Toast.LENGTH_LONG).show();
                 return;
             }
 
             if (!mFingerprintManager.hasEnrolledFingerprints())//是否有設定至少一枚指紋
             {
+                Toast.makeText(this, "是否有設定至少一枚指紋", Toast.LENGTH_LONG).show();
                 return;
             }
         }
@@ -151,12 +167,12 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-    public void authenticate (
-            FingerprintManager.CryptoObject crypto,//為 Android 6.0中 crypto objects 的 wrapper class，可以透過它讓 authenticate 過程更為安全，但也可以不使用；
-            CancellationSignal cancel,//即用來取消 authenticate 的物件；
-            int flags,//為一個旗標，只能設為 0
-            FingerprintManager.AuthenticationCallback callback,//用來接受 authenticate 成功與否，一共有三個 callback method；
-            Handler handler) //為 optional 的參數，如果有使用，則 FingerprintManager 可以透過它來傳遞訊息
+//    public void authenticate (
+//            FingerprintManager.CryptoObject crypto,//為 Android 6.0中 crypto objects 的 wrapper class，可以透過它讓 authenticate 過程更為安全，但也可以不使用；
+//            CancellationSignal cancel,//即用來取消 authenticate 的物件；
+//            int flags,//為一個旗標，只能設為 0
+//            FingerprintManager.AuthenticationCallback callback,//用來接受 authenticate 成功與否，一共有三個 callback method；
+//            Handler handler)//為 optional 的參數，如果有使用，則 FingerprintManager 可以透過它來傳遞訊息
 
     public void signup (View view) {
         Intent signupit = new Intent(LoginActivity.this, SignupActivity.class);
