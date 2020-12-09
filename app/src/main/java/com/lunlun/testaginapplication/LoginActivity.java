@@ -46,9 +46,11 @@ public class LoginActivity extends AppCompatActivity {
     private String pass;
     private CheckBox cb;
 
+//  指紋辨識
     private KeyguardManager mKeyguardManager;
     private FingerprintManager mFingerprintManager;
     private CancellationSignal cancellationSignal;
+
 //    FirebaseAuth auth;
 //    FirebaseAuth.AuthStateListener authStateListener;
 
@@ -68,8 +70,13 @@ public class LoginActivity extends AppCompatActivity {
 //                }
 //            }
 //        };
-        getImei();
+        getImei();//得到IMEI
         findView();
+
+        email = findViewById(R.id.ed_email);
+        eemail = email.getText().toString();
+        password = findViewById(R.id.ed_password);
+        pass = password.getText().toString();
     }
 //
 //    @Override
@@ -88,20 +95,20 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.touchidimageButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(LoginActivity.this,"指紋辨識",Toast.LENGTH_LONG).show();
-                checkrequirement();
-                startFingerprintListening();
+                Toast.makeText(LoginActivity.this,"使用指紋辨識",Toast.LENGTH_LONG).show();
+                checkrequirement();//檢查裝置是否支援指紋辨識
+                startFingerprintListening();//開始掃描
             }
         });
 
         findViewById(R.id.faceidimageButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                Toast.makeText(LoginActivity.this,"目前不支援臉部辨識",Toast.LENGTH_LONG).show();
                 Snackbar.make(view,"目前不支援臉部辨識",Snackbar.LENGTH_LONG).show();
             }
         });
 
+        //自動輸入帳號密碼
         findViewById(R.id.soonImageButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -110,6 +117,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
+        //顯示或隱藏密碼
         cb = findViewById(R.id.showpswcheckBox);
         cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
@@ -174,29 +182,24 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-//        cancellationSignal.cancel();
+        cancellationSignal.cancel();
         cancellationSignal = null;
     }
 
     private void checkrequirement() {
         mKeyguardManager = (KeyguardManager)getSystemService(Activity.KEYGUARD_SERVICE);//是否有設定 screen lock
-                mFingerprintManager = (FingerprintManager) getSystemService(Activity.FINGERPRINT_SERVICE);//FingerprintManager.class
-
-        if (!mKeyguardManager.isKeyguardSecure()){//是否有設定 fingerprint screen lock
+        mFingerprintManager = (FingerprintManager) getSystemService(Activity.FINGERPRINT_SERVICE);//FingerprintManager.class
+        if (!mKeyguardManager.isKeyguardSecure()){
             Toast.makeText(this, "是否有設定 fingerprint screen lock", Toast.LENGTH_LONG).show();
             return;
         }
-
-        if (checkSelfPermission(Manifest.permission.USE_FINGERPRINT) == PackageManager.PERMISSION_GRANTED) //In SDK 23, we need to check the permission before we call FingerprintManager API functionality.
-        {
-            if (!mFingerprintManager.isHardwareDetected())//硬體裝置是否支援 fingerprint reader
-            {
+        if (checkSelfPermission(Manifest.permission.USE_FINGERPRINT) == PackageManager.PERMISSION_GRANTED) {
+            //In SDK 23, we need to check the permission before we call FingerprintManager API functionality.
+            if (!mFingerprintManager.isHardwareDetected()) {
                 Toast.makeText(this, "硬體裝置是否支援 fingerprint reader", Toast.LENGTH_LONG).show();
                 return;
             }
-
-            if (!mFingerprintManager.hasEnrolledFingerprints())//是否有設定至少一枚指紋
-            {
+            if (!mFingerprintManager.hasEnrolledFingerprints()) {
                 Toast.makeText(this, "是否有設定至少一枚指紋", Toast.LENGTH_LONG).show();
                 return;
             }
@@ -227,25 +230,22 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     public void login(View view) {
-        email = findViewById(R.id.ed_email);
-        eemail = email.getText().toString();
-        password = findViewById(R.id.ed_password);
-        pass = password.getText().toString();
 
-//        if (eemail.equals("wubetty2012@gmail.com") && pass.equals("123123")) {
-//            verifiedsuccessfully();
-//        } else {
-//            new AlertDialog.Builder(this)
-//                    .setTitle("登入失敗")
-//                    .setMessage("員工編號/Email或密碼錯誤!")
-//                    .setPositiveButton("OK", null)
-//                    .show();
-//        }
+        if (eemail.equals("wubetty2012@gmail.com") && pass.equals("123123")) {
+            verifiedsuccessfully();
+        } else {
+            new AlertDialog.Builder(this)
+                    .setTitle("登入失敗")
+                    .setMessage("員工編號/Email或密碼錯誤!")
+                    .setPositiveButton("OK", null)
+                    .show();
+        }
 
 //        String eemail="hello10050067@gmail.com";
 //        String pass="123456";
 
 //        Log.d("AUTH",eemail+"/"+pass);
+
 //        auth.signInWithEmailAndPassword(eemail,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
 //            @Override
 //            public void onComplete(@NonNull Task<AuthResult> task) {
@@ -300,18 +300,18 @@ public class LoginActivity extends AppCompatActivity {
 //            FingerprintManager.AuthenticationCallback callback,//用來接受 authenticate 成功與否，一共有三個 callback method；
 //            Handler handler)//為 optional 的參數，如果有使用，則 FingerprintManager 可以透過它來傳遞訊息
 
-//    @Override
-//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-//        switch (requestCode) {
-//            case REQUEST_CODE: {
-//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-//                    Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
-//                }
-//            }
-//        }
-//    }
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE: {
+                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }
+    }
 
 
 }

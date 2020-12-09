@@ -216,7 +216,7 @@ public class MainActivity extends AppCompatActivity {
                 public void onClick(View v) {
                     new AlertDialog.Builder(taskcontext)
                             .setIcon(task.taskImageView)
-                            .setMessage("早安你好")
+                            .setMessage("測試測試")
                             .setTitle(task.taskName)
                             .setPositiveButton("已讀",null)
                             .setNeutralButton("cancel/back",null)
