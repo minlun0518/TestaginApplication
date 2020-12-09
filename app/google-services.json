@@ -1,0 +1,127 @@
+{
+  "project_info": {
+    "project_number": "1025956631565",
+    "firebase_url": "https://loginapplication-f107e.firebaseio.com",
+    "project_id": "loginapplication-f107e",
+    "storage_bucket": "loginapplication-f107e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025956631565:android:b106dda9615aa264373144",
+        "android_client_info": {
+          "package_name": "com.google.firebase.quickstart.auth"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025956631565-t5p0l80fkccslgp53qte8ej4v4n8vbtv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0sj4OwcvND0McJRhBNfYpanvHe8Sk-ME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025956631565-t5p0l80fkccslgp53qte8ej4v4n8vbtv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025956631565:android:336eaa6b8f5b764f373144",
+        "android_client_info": {
+          "package_name": "com.lunlun.loginapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025956631565-t5p0l80fkccslgp53qte8ej4v4n8vbtv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0sj4OwcvND0McJRhBNfYpanvHe8Sk-ME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025956631565-t5p0l80fkccslgp53qte8ej4v4n8vbtv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025956631565:android:3173b06eb9318382373144",
+        "android_client_info": {
+          "package_name": "com.lunlun.testaginapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025956631565-t5p0l80fkccslgp53qte8ej4v4n8vbtv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0sj4OwcvND0McJRhBNfYpanvHe8Sk-ME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025956631565-t5p0l80fkccslgp53qte8ej4v4n8vbtv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1025956631565:android:6d743fbed296db1a373144",
+        "android_client_info": {
+          "package_name": "com.lunlun.twooneapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1025956631565-t5p0l80fkccslgp53qte8ej4v4n8vbtv.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA0sj4OwcvND0McJRhBNfYpanvHe8Sk-ME"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1025956631565-t5p0l80fkccslgp53qte8ej4v4n8vbtv.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
