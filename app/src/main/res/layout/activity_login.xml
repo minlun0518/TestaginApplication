@@ -9,7 +9,7 @@
         android:id="@+id/ed_imei"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textColor="@color/purple_200"
+        android:textColor="@color/cathayhospital5"
         android:textStyle="bold"
         app:layout_constraintStart_toStartOf="@+id/ed_email"
         app:layout_constraintTop_toTopOf="@+id/rememberMe" />

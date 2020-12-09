@@ -78,7 +78,7 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.ed_password);
         pass = password.getText().toString();
     }
-//
+
 //    @Override
 //    protected void onStart() {
 //        super.onStart();
@@ -95,7 +95,7 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.touchidimageButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(LoginActivity.this,"使用指紋辨識",Toast.LENGTH_LONG).show();
+                Toast.makeText(LoginActivity.this,"使用指紋辨識",Toast.LENGTH_SHORT).show();
                 checkrequirement();//檢查裝置是否支援指紋辨識
                 startFingerprintListening();//開始掃描
             }

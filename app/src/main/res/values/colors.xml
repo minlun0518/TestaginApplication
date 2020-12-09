@@ -17,7 +17,12 @@
     <color name="fresh_mediumgrey1">#A6BCD0</color>
     <color name="fresh_mediumgrey2">#748A9D</color>
     <color name="fresh_darkgrey">#404E5A</color>
-    <color name="darkergrey">#</color>
+    <color name="waplant_bgyellow">#FFDC30</color>
+    <color name="waplant_bggreen">#9BEC79</color>
+    <color name="waplant_bgblue">#ACDBFF</color>
+    <color name="waplant_gray">#BDC1BB</color>
+    <color name="waplant_blue">#5483EF</color>
+
 <!--    <color name="">#</color>-->
 
 </resources>
