@@ -1,6 +1,7 @@
 package com.lunlun.testaginapplication;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -9,6 +10,7 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.KeyguardManager;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.fingerprint.FingerprintManager;
@@ -25,6 +27,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.tasks.OnCanceledListener;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.Task;
+import com.google.android.material.snackbar.Snackbar;
+import com.google.firebase.auth.AuthResult;
+import com.google.firebase.auth.FirebaseAuth;
+
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -40,15 +49,40 @@ public class LoginActivity extends AppCompatActivity {
     private KeyguardManager mKeyguardManager;
     private FingerprintManager mFingerprintManager;
     private CancellationSignal cancellationSignal;
+//    FirebaseAuth auth;
+//    FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
+//        auth=FirebaseAuth.getInstance();
+//        authStateListener=new FirebaseAuth.AuthStateListener() {
+//            @Override
+//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
+//                if(email!=null){
+////                    Log.d("onAuthStateChanged"),"登入:"+email.userUID());
+////                    userUID=user.getUid();
+//                }else {
+////                    Log.d("onAuthStateChanged"),"已登出");
+//                }
+//            }
+//        };
         getImei();
         findView();
     }
+//
+//    @Override
+//    protected void onStart() {
+//        super.onStart();
+//        auth.addAuthStateListener(authStateListener);
+//    }
+//
+//    @Override
+//    protected void onStop() {
+//        super.onStop();
+//        auth.removeAuthStateListener(authStateListener);
+//    }
 
     private void findView() {
         findViewById(R.id.touchidimageButton).setOnClickListener(new View.OnClickListener() {
@@ -63,7 +97,8 @@ public class LoginActivity extends AppCompatActivity {
         findViewById(R.id.faceidimageButton).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(LoginActivity.this,"目前不支援臉部辨識",Toast.LENGTH_LONG).show();
+//                Toast.makeText(LoginActivity.this,"目前不支援臉部辨識",Toast.LENGTH_LONG).show();
+                Snackbar.make(view,"目前不支援臉部辨識",Snackbar.LENGTH_LONG).show();
             }
         });
 
@@ -139,7 +174,7 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     public void onPause() {
         super.onPause();
-        cancellationSignal.cancel();
+//        cancellationSignal.cancel();
         cancellationSignal = null;
     }
 
@@ -168,9 +203,10 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
+    private static final int REQUEST_CODE_Sing = 101;
     public void signup (View view) {
         Intent signupit = new Intent(LoginActivity.this, SignupActivity.class);
-        startActivity(signupit);
+        startActivityForResult(signupit,REQUEST_CODE_Sing);
     }
 
     public void getImei() {
@@ -196,22 +232,65 @@ public class LoginActivity extends AppCompatActivity {
         password = findViewById(R.id.ed_password);
         pass = password.getText().toString();
 
-        if (eemail.equals("wubetty2012@gmail.com") && pass.equals("123123")) {
-            verifiedsuccessfully();
-        } else {
-            new AlertDialog.Builder(this)
-                    .setTitle("登入失敗")
-                    .setMessage("員工編號/Email或密碼錯誤!")
-                    .setPositiveButton("OK", null)
-                    .show();
-        }
+//        if (eemail.equals("wubetty2012@gmail.com") && pass.equals("123123")) {
+//            verifiedsuccessfully();
+//        } else {
+//            new AlertDialog.Builder(this)
+//                    .setTitle("登入失敗")
+//                    .setMessage("員工編號/Email或密碼錯誤!")
+//                    .setPositiveButton("OK", null)
+//                    .show();
+//        }
+
+//        String eemail="hello10050067@gmail.com";
+//        String pass="123456";
+
+//        Log.d("AUTH",eemail+"/"+pass);
+//        auth.signInWithEmailAndPassword(eemail,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                if(!task.isSuccessful()){
+//                    Log.d("ONComplete","登入失敗");
+//                    register(eemail,pass);
+//                }
+//            }
+//        });
     }
 
+//    private void register(String eemail, String pass) {
+//        new AlertDialog.Builder(LoginActivity.this)
+//                .setTitle("登入問題")
+//                .setMessage("無此帳號，需要註冊")
+//                .setPositiveButton("好",
+//                        new DialogInterface.OnClickListener(){
+//                            @Overridet
+//                            public void onClick (DialogInterface dialog, int which){
+//                                creatUser(eemail,pass);
+//                            }
+//                        })
+//                .setNeutralButton("取消",null)
+//                .show();
+//    }
+
+//    private void creatUser(String umail, String upass) {
+//        auth.createUserWithEmailAndPassword(umail,upass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+//            @Override
+//            public void onComplete(@NonNull Task<AuthResult> task) {
+//                String message = task.isComplete() ? "註冊成功" : "註冊失敗" ;
+//                new AlertDialog.Builder(LoginActivity.this)
+//                        .setMessage(message)
+//                        .setNeutralButton("OK",null)
+//                        .show();
+//            }
+//        });
+//
+//    }
+
     public void verifiedsuccessfully(){
-        setResult(RESULT_OK);
+//        getIntent().putExtra("LOGIN_IMEI",imei.toString());
+//        getIntent().putExtra("LOGIN_ID",eemail);
+        setResult(RESULT_OK,getIntent());
         finish();
-//            Intent main = new Intent(LoginActivity.this, MainActivity.class);
-//            startActivity(main);
     }
 
 //    public void authenticate (
@@ -221,18 +300,18 @@ public class LoginActivity extends AppCompatActivity {
 //            FingerprintManager.AuthenticationCallback callback,//用來接受 authenticate 成功與否，一共有三個 callback method；
 //            Handler handler)//為 optional 的參數，如果有使用，則 FingerprintManager 可以透過它來傳遞訊息
 
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+//        switch (requestCode) {
+//            case REQUEST_CODE: {
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
+//                }
+//            }
+//        }
+//    }
 
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
-        switch (requestCode) {
-            case REQUEST_CODE: {
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    Toast.makeText(this, "Permission granted.", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(this, "Permission denied.", Toast.LENGTH_SHORT).show();
-                }
-            }
-        }
-    }
 }

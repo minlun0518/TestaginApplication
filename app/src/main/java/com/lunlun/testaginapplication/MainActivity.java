@@ -251,4 +251,18 @@ public class MainActivity extends AppCompatActivity {
         return NavigationUI.navigateUp(navController, mAppBarConfiguration) || super.onSupportNavigateUp();
     }
 
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+//        super.onActivityResult(requestCode, resultCode, data);
+//        if(requestCode==REQUEST_CODE){
+//            if(resultCode==RESULT_OK){
+//                TextView imeiview = findViewById(R.id.imeiTextView);
+//                imeiview.setText(data.getStringExtra("LOGIN_IMEI"));
+//                TextView useridtextView =findViewById(R.id.useridTextView);
+//                useridtextView.setText(data.getStringExtra("LOGIN_ID"));
+//            }
+//        }
+//
+//    }
+
 }
