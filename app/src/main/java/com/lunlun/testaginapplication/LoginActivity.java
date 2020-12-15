@@ -55,10 +55,6 @@ public class LoginActivity extends AppCompatActivity {
     String IMEINumber;
     TextView imei;
     private static final int REQUEST_CODE = 101;
-    private EditText password;
-    private EditText email;
-    private String eemail;
-    private String pass;
     private CheckBox cb;
 
 //  指紋辨識
@@ -72,8 +68,6 @@ public class LoginActivity extends AppCompatActivity {
     TextView textViewSignUp;
     ProgressBar progressBar;
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,7 +75,7 @@ public class LoginActivity extends AppCompatActivity {
 
         getImei();//得到IMEI
 //        checkDivicd();
-//        findView();
+        findView();
 
 //        email = findViewById(R.id.ed_email);
 //        eemail = email.getText().toString();
@@ -135,9 +129,6 @@ public class LoginActivity extends AppCompatActivity {
                                     String result = putData.getResult();
                                     if (result.equals("Login Success")) {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
-//                                        Intent intent = new Intent(getApplicationContext(), MainActivity.class);
-//                                        startActivity(intent);
-//                                        finish();
                                         verifiedsuccessfully();
                                     } else {
                                         Toast.makeText(getApplicationContext(), result, Toast.LENGTH_LONG).show();
@@ -146,7 +137,6 @@ public class LoginActivity extends AppCompatActivity {
                             }
                         }
                     });
-//                    verifiedsuccessfully();
                 } else {
                     Toast.makeText(getApplicationContext(), "All fields require", Toast.LENGTH_LONG).show();
                 }
@@ -178,21 +168,21 @@ public class LoginActivity extends AppCompatActivity {
         });
 
         //顯示或隱藏密碼
-////        cb = findViewById(R.id.showpswcheckBox);
-//        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-//            @Override
-//            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-//                // TODO Auto-generated method stub
-//                if (isChecked) {
-//                    //顯示密碼
-//                    password.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
-//                } else {
-//                    //隱藏密碼
-//                    password.setTransformationMethod(PasswordTransformationMethod.getInstance());
-//
-//                }
-//            }
-//        });
+        cb = findViewById(R.id.showpswcheckBox);
+        cb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                // TODO Auto-generated method stub
+                if (isChecked) {
+                    //顯示密碼
+                    textInputEditTextPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                } else {
+                    //隱藏密碼
+                    textInputEditTextPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+
+                }
+            }
+        });
     }
 
     private void startFingerprintListening() {
@@ -282,39 +272,11 @@ public class LoginActivity extends AppCompatActivity {
         }
         IMEINumber = telephonyManager.getDeviceId();
         imei.setText(IMEINumber);
-        new AlertDialog.Builder(this)
-                .setTitle("手機識別碼讀取結果")
-                .setMessage("您的裝置編號為:"+IMEINumber)
-                .setPositiveButton("OK", null)
-                .show();
-    }
-
-    public void login(View view) {
-
-        if (eemail.equals("wubetty2012@gmail.com") && pass.equals("123123")) {
-            verifiedsuccessfully();
-        } else {
-            new AlertDialog.Builder(this)
-                    .setTitle("登入失敗")
-                    .setMessage("員工編號/Email或密碼錯誤!")
-                    .setPositiveButton("OK", null)
-                    .show();
-        }
-
-//        String eemail="hello10050067@gmail.com";
-//        String pass="123456";
-
-//        Log.d("AUTH",eemail+"/"+pass);
-
-//        auth.signInWithEmailAndPassword(eemail,pass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                if(!task.isSuccessful()){
-//                    Log.d("ONComplete","登入失敗");
-//                    register(eemail,pass);
-//                }
-//            }
-//        });
+//        new AlertDialog.Builder(this)
+//                .setTitle("手機識別碼讀取結果")
+//                .setMessage("您的裝置編號為:"+IMEINumber)
+//                .setPositiveButton("OK", null)
+//                .show();
     }
 
     public static void handleSSLHandshake() {
@@ -346,35 +308,6 @@ public class LoginActivity extends AppCompatActivity {
         }
     }
 
-//    private void register(String eemail, String pass) {
-//        new AlertDialog.Builder(LoginActivity.this)
-//                .setTitle("登入問題")
-//                .setMessage("無此帳號，需要註冊")
-//                .setPositiveButton("好",
-//                        new DialogInterface.OnClickListener(){
-//                            @Overridet
-//                            public void onClick (DialogInterface dialog, int which){
-//                                creatUser(eemail,pass);
-//                            }
-//                        })
-//                .setNeutralButton("取消",null)
-//                .show();
-//    }
-
-//    private void creatUser(String umail, String upass) {
-//        auth.createUserWithEmailAndPassword(umail,upass).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-//            @Override
-//            public void onComplete(@NonNull Task<AuthResult> task) {
-//                String message = task.isComplete() ? "註冊成功" : "註冊失敗" ;
-//                new AlertDialog.Builder(LoginActivity.this)
-//                        .setMessage(message)
-//                        .setNeutralButton("OK",null)
-//                        .show();
-//            }
-//        });
-//
-//    }
-
     public void verifiedsuccessfully(){
 //        getIntent().putExtra("LOGIN_IMEI",imei.toString());
 //        getIntent().putExtra("LOGIN_ID",eemail);
@@ -382,12 +315,6 @@ public class LoginActivity extends AppCompatActivity {
         finish();
     }
 
-//    public void authenticate (
-//            FingerprintManager.CryptoObject crypto,//為 Android 6.0中 crypto objects 的 wrapper class，可以透過它讓 authenticate 過程更為安全，但也可以不使用；
-//            CancellationSignal cancel,//即用來取消 authenticate 的物件；
-//            int flags,//為一個旗標，只能設為 0
-//            FingerprintManager.AuthenticationCallback callback,//用來接受 authenticate 成功與否，一共有三個 callback method；
-//            Handler handler)//為 optional 的參數，如果有使用，則 FingerprintManager 可以透過它來傳遞訊息
 
     @Override
     public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
