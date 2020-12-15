@@ -77,11 +77,6 @@ public class LoginActivity extends AppCompatActivity {
 //        checkDivicd();
         findView();
 
-//        email = findViewById(R.id.ed_email);
-//        eemail = email.getText().toString();
-//        password = findViewById(R.id.ed_password);
-//        pass = password.getText().toString();
-
         textInputEditTextIDorEmail = findViewById(R.id.IDorEmail);
         textInputEditTextPassword = findViewById(R.id.password);
         buttonLogin = findViewById(R.id.buttonLogin);
@@ -113,8 +108,6 @@ public class LoginActivity extends AppCompatActivity {
                     handler.post(new Runnable() {
                         @Override
                         public void run() {
-                            //Starting Write and Read data with URL
-                            //Creating array for parameters
                             String[] field = new String[2];
                             field[0] = "email";
                             field[1] = "password";
@@ -257,10 +250,6 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private static final int REQUEST_CODE_Sing = 101;
-    public void signup (View view) {
-        Intent signupit = new Intent(LoginActivity.this, SignupActivity.class);
-        startActivityForResult(signupit,REQUEST_CODE_Sing);
-    }
 
     public void getImei() {
         imei = findViewById(R.id.ed_imei);
