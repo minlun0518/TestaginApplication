@@ -97,7 +97,7 @@ public class MainActivity extends AppCompatActivity {
         noterecyclerView.setLayoutManager( new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.VERTICAL));
 
         List<Task> taskList = new ArrayList<>();
-        taskList.add(new Task (1,"PGY 提醒",R.drawable.icon_realdr));
+        taskList.add(new Task (1,"教學評量進度",R.drawable.icon_realdr));
         taskList.add(new Task (2,"明日班表",R.drawable.icon_mon_card));
         taskList.add(new Task (3,"今日會議",R.drawable.icon_conversation));
 

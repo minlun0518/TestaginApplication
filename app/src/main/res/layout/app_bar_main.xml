@@ -29,8 +29,8 @@
         android:layout_margin="@dimen/fab_margin"
         android:background="@drawable/snoopy"
 
-        app:fabSize="auto"
-         />
+        android:visibility="gone"
+        app:fabSize="auto" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
