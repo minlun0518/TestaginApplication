@@ -51,26 +51,14 @@ public class LoginActivity extends AppCompatActivity {
     private FingerprintManager mFingerprintManager;
     private CancellationSignal cancellationSignal;
 
-//    FirebaseAuth auth;
-//    FirebaseAuth.AuthStateListener authStateListener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-//        auth=FirebaseAuth.getInstance();
-//        authStateListener=new FirebaseAuth.AuthStateListener() {
-//            @Override
-//            public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
-//                if(email!=null){
-////                    Log.d("onAuthStateChanged"),"登入:"+email.userUID());
-////                    userUID=user.getUid();
-//                }else {
-////                    Log.d("onAuthStateChanged"),"已登出");
-//                }
-//            }
-//        };
+
         getImei();//得到IMEI
+//        checkDivicd();
         findView();
 
         email = findViewById(R.id.ed_email);
@@ -79,16 +67,10 @@ public class LoginActivity extends AppCompatActivity {
         pass = password.getText().toString();
     }
 
-//    @Override
-//    protected void onStart() {
-//        super.onStart();
-//        auth.addAuthStateListener(authStateListener);
-//    }
+//    private void checkDivicd() {
+//        //假設是公務機 顯示近期登入人員
 //
-//    @Override
-//    protected void onStop() {
-//        super.onStop();
-//        auth.removeAuthStateListener(authStateListener);
+//        //個人裝置 顯示有指紋登入的頁面
 //    }
 
     private void findView() {

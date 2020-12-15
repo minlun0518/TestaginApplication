@@ -28,17 +28,17 @@ public class SignupActivity extends AppCompatActivity {
     }
 
     private void findview() {
-        EditText edmail = findViewById(R.id.ed_email2);
-        EditText edmemberId = findViewById(R.id.edmemberId);
-        EditText edpassword = findViewById(R.id.ed_password2);
-        EditText edagpassword = findViewById(R.id.agained_password);
+//        EditText edmail = findViewById(R.id.ed_email2);
+//        EditText edmemberId = findViewById(R.id.edmemberId);
+//        EditText edpassword = findViewById(R.id.ed_password2);
+//        EditText edagpassword = findViewById(R.id.agained_password);
 
 //        String umail=edmail.getText().toString();
         String umail="hello10050067@gmail.com";
-        String uid=edmemberId.getText().toString();
+//        String uid=edmemberId.getText().toString();
 //        String upass=edpassword.getText().toString();
         String upass="000000";
-        String uspass=edagpassword.getText().toString();
+//        String uspass=edagpassword.getText().toString();
 
 //        findViewById(R.id.singinButton).setOnClickListener(new View.OnClickListener() {
 //            @Override
