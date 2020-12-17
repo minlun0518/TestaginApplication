@@ -14,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.Menu;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -85,11 +86,11 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager( new StaggeredGridLayoutManager(1,StaggeredGridLayoutManager.HORIZONTAL));
 
         List<ApplicationItem> applicationItemList = new ArrayList<>();
-        applicationItemList.add(new ApplicationItem (1,getString(R.string.app_time_attendance_system),R.drawable.icon_immigration));
-        applicationItemList.add(new ApplicationItem (2,getString(R.string.app_staff_scheduling_system),R.drawable.icon_calendar));
-        applicationItemList.add(new ApplicationItem (3,"會議室簽到系統",R.drawable.icon_conversation));
-        applicationItemList.add(new ApplicationItem (4,"教學評量系統",R.drawable.icon_checklist));
-        applicationItemList.add(new ApplicationItem (5,"採檢及生理量測系統",R.drawable.icon_blood_sample));
+        applicationItemList.add(new ApplicationItem (1,getString(R.string.app_time_attendance_system),R.drawable.icon_immigration,"點我打卡"));
+        applicationItemList.add(new ApplicationItem (2,getString(R.string.app_staff_scheduling_system),R.drawable.icon_calendar,"點我排班"));
+        applicationItemList.add(new ApplicationItem (3,"會議室簽到系統",R.drawable.icon_conversation,"點我簽到"));
+        applicationItemList.add(new ApplicationItem (4,"教學評量系統",R.drawable.icon_checklist,"點我評量"));
+        applicationItemList.add(new ApplicationItem (5,"採檢及生理量測系統",R.drawable.icon_blood_sample,"進入"));
 
         recyclerView.setAdapter(new ApplicationItemAdapter(this,applicationItemList));
 
@@ -119,12 +120,15 @@ public class MainActivity extends AppCompatActivity {
             ImageView imageview;
             TextView appname;
             View itemView;
+            Button clickbutton;
 
             public ViewHolder(View itemView){
                 super(itemView);
                 this.itemView = itemView;
                 imageview= itemView.findViewById(R.id.imageView2);
                 appname=itemView.findViewById(R.id.textView5);
+                clickbutton=itemView.findViewById(R.id.clickbutton);
+//                clickbutton.setText(applicationItem.appAct);
             }
         }
 
@@ -145,6 +149,7 @@ public class MainActivity extends AppCompatActivity {
             ApplicationItem applicationItem = applicationItemList.get(position);
             viewHolder.appname.setText(applicationItem.appName);
             viewHolder.imageview.setImageResource(applicationItem.imageViewpost);
+            viewHolder.clickbutton.setText(applicationItem.appAct);
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -162,11 +167,13 @@ public class MainActivity extends AppCompatActivity {
         public int position;
         public String appName;
         public int imageViewpost;
+        public String appAct;
 
-        public ApplicationItem(int position, String appName, int imageViewpost){
+        public ApplicationItem(int position, String appName, int imageViewpost,String appAct){
             this.position=position;
             this.appName=appName;
             this.imageViewpost=imageViewpost;
+            this.appAct=appAct;
         }
     }
 

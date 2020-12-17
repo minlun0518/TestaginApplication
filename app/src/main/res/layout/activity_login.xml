@@ -47,6 +47,7 @@
                 android:id="@+id/IDorEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#F0F5F7"
                 android:drawableEnd="@drawable/ic_user"
                 android:drawableRight="@drawable/ic_user"
                 android:fontFamily="@font/poppinsmedium"
@@ -68,6 +69,7 @@
                 android:id="@+id/password"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="#F0F5F7"
                 android:drawableEnd="@drawable/ic_pass"
                 android:drawableRight="@drawable/ic_pass"
                 android:fontFamily="@font/poppinsmedium"
@@ -111,7 +113,7 @@
             tools:targetApi="jelly_bean" />
 
         <CheckBox
-            android:id="@+id/checkBox2"
+            android:id="@+id/showpswcheckBox"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="32dp"
@@ -132,7 +134,7 @@
         app:srcCompat="@drawable/logo" />
 
     <CheckBox
-        android:id="@+id/showpswcheckBox"
+        android:id="@+id/rememberme"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="32dp"

@@ -9,9 +9,18 @@
             android:icon="@drawable/ic_menu_camera"
             android:title="@string/menu_home" />
         <item
+            android:id="@+id/profile"
+            android:icon="@drawable/ic_user"
+            android:title="個人資料"/>
+
+        <item
             android:id="@+id/all"
             android:icon="@drawable/ic_menu_gallery"
-            android:title="@string/menu_gallery"/>
-
+            android:title="所有功能"/>
     </group>
+
+    <item
+        android:id="@+id/logout"
+        android:icon="@drawable/icon_logout"
+        android:title="登出"/>
 </menu>
