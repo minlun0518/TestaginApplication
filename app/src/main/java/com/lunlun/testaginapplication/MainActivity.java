@@ -226,6 +226,23 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    @Override
+    //防止按返回
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        //requestCode:出門前貼標籤
+        //resultCode:回來帶的結果
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == REQUEST_CODE) {
+            //判斷是不是正常回家，如果有好好的來回
+            if (resultCode != RESULT_OK) {
+                Toast.makeText(this, "再見", Toast.LENGTH_LONG).show();
+                finish();
+            } else {
+                logon = true;
+            }
+        }
+    }
+
     public class Task{
         public int taskPosition;
         public String taskName;
